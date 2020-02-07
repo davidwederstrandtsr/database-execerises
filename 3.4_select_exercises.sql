@@ -32,8 +32,8 @@ WHERE release_date BETWEEN 1990 AND 1999;
 
 # albums with less then 20 million in sales
 SELECT NAME FROM albums
-WHERE sales < 20000000;
-# 32 albums
+WHERE sales < 20;
+# 13 albums
 
 # genre Rock. why not Hard or Progessive Rock
 SELECT NAME FROM albums
