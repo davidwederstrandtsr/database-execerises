@@ -1,1 +1,3 @@
-<h1>This repository holds all of my CodeUp database exercises<h1>
+<h1>Wederstrandt Database Execerices<h1>
+# This is h1
+## h2
