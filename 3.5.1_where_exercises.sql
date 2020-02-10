@@ -42,6 +42,23 @@ SELECT *
 FROM employees 
 WHERE last_name LIKE 'E%' OR last_name LIKE '%E';
 
+# all employees who's last name begins or ends with E
+SELECT *
+FROM employees 
+WHERE last_name LIKE 'E%' AND last_name LIKE '%E';
+
+# all employees hired in the 90's and born on Christmas
+SELECT *
+FROM employees
+WHERE hire_date LIKE '199%' AND birth_date LIKE '%-12-25';
+
+# all employees with q but not qu in the last name
+SELECT *
+FROM employees 
+WHERE last_name LIKE '%q%' AND last_name NOT LIKE '%qu%';
+
+
+
 
 
 
