@@ -39,7 +39,7 @@ ORDER BY last_name DESC, first_name;
 # all employees with an e in their name, ORDER BY employee number DESC
 SELECT *
 FROM employees 
-WHERE last_name LIKE '%E%'
+WHERE last_name LIKE 'e%e'
 ORDER BY emp_no DESC; 
 
 # 8
