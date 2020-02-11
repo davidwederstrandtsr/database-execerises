@@ -11,27 +11,34 @@ FROM employees
 WHERE last_name LIKE 'e%e'
 GROUP BY last_name;
 
+
 # 4 select last names that 
-SELECT
+SELECT    # CONCAT (first_name, " ", last_name) AS "full_name"
 	first_name,
 	last_name
 FROM employees
 WHERE last_name LIKE 'e%e'
-GROUP BY first_name, last_name;
+GROUP BY first_name, last_name;  # full_name or CONCAT(first_name, " ", last_name);
+
 
 # 5 last name contains q but not qu
-SELECT DISTINCT
+SELECT
 	last_name
 FROM employees
-WHERE last_name LIKE '%q%' AND last_name NOT LIKE '%qu%';
+WHERE last_name LIKE '%q%' 
+AND last_name NOT LIKE '%qu%'
+GROUP BY last_name;
 
-# 6 last name contains q but not qu, count each
-SELECT DISTINCT
+
+# 6 last name contains q but not 
+SELECT 
 	last_name,
-	count(last_name)
+	COUNT(*)
 FROM employees
-GROUP BY last_name
-ORDER BY count(last_name) DESC;
+WHERE last_name LIKE '%q%' 
+AND last_name NOT LIKE '%qu%'
+GROUP BY last_name;
+
 
 # 7 count how many Irena, Vidya, Maya
 SELECT
