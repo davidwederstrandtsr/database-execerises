@@ -30,8 +30,8 @@ SELECT DISTINCT
 	last_name,
 	count(last_name)
 FROM employees
-WHERE last_name LIKE '%q%' AND last_name NOT LIKE '%qu%'
-GROUP BY last_name;
+GROUP BY last_name
+ORDER BY count(last_name) DESC;
 
 # 7 count how many Irena, Vidya, Maya
 SELECT
