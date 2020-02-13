@@ -165,7 +165,17 @@ ORDER BY average_salary DESC
 LIMIT 1;
 
 # 7 revisited
-
+SELECT 
+    dept_name,
+    AVG(salary) AS `Highest Average Salary`
+FROM salaries s
+JOIN dept_emp de USING(emp_no)
+JOIN departments d USING(dept_no)
+WHERE de.to_date > NOW()
+	AND s.to_date > NOW()
+GROUP BY dept_name
+ORDER BY `Highest Average Salary` DESC
+LIMIT 1;
 
 
 
@@ -180,6 +190,21 @@ JOIN departments d ON d.dept_no = de.dept_no
 WHERE s.to_date = '9999-01-01' 
 	AND de.to_date = "9999-01-01" 
 	AND d.dept_no = 'd001'
+ORDER BY salary DESC
+LIMIT 1;
+
+# 8 revisited
+SELECT 
+	first_name,
+	last_name,
+	salary
+FROM employees e
+JOIN dept_emp de ON de.emp_no = e.emp_no
+JOIN salaries s ON s.emp_no = de.emp_no
+JOIN departments d ON d.dept_no = de.dept_no
+WHERE s.to_date > CURDATE()
+	AND de.to_date > CURDATE()
+	AND dept_name = "Marketing"
 ORDER BY salary DESC
 LIMIT 1;
 
@@ -199,6 +224,20 @@ WHERE s.to_date = '9999-01-01' AND dm.to_date = "9999-01-01"
 ORDER BY salary DESC
 LIMIT 1; 
 
+# 9 revisited
+SELECT
+	first_name,
+	last_name,
+	salary,
+	dept_name
+FROM dept_manager
+JOIN employees USING(emp_no)
+JOIN salaries USING(emp_no)
+JOIN departments USING(dept_no)
+WHERE salaries.to_date > CURDATE()
+	AND dept_manager.to_date > CURDATE()
+ORDER BY salary DESC
+LIMIT 1;
 
 
 # 10 bonus
