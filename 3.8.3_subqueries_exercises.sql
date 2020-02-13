@@ -3,15 +3,16 @@
 SELECT 
 	CONCAT(first_name, ' ', last_name) AS `Employees with hire_date similar to emp_no 101010`
 FROM employees
-WHERE hire_date IN (
+WHERE hire_date = (
 	SELECT hire_date
 	FROM employees
 	WHERE emp_no = 101010
 );
 
+
 # 2
 -- Find all the titles held by all employees with the first name Aamod
-SELECT 
+SELECT DISTINCT 
 	title AS `Titles held by Aamod`
 FROM titles
 WHERE emp_no IN (
@@ -19,6 +20,7 @@ WHERE emp_no IN (
 	FROM employees
 	WHERE first_name = 'Aamod'
 );
+
 
 # 3
 -- How many people in the employees table are no longer working for the company?
@@ -30,6 +32,19 @@ WHERE emp_no IN (
 	FROM dept_emp
 	WHERE to_date < CURDATE()
 );
+
+
+# 3 done in class
+ SELECT (
+ 	SELECT COUNT(*)
+ 	FROM employees
+ 	) - (
+ 	SELECT COUNT(*)
+ 	FROM salaries
+ 	WHERE to_date > NOW()
+ );
+ 
+ 
 
 # 4
 -- Find all the current department managers that are female.
@@ -43,6 +58,8 @@ WHERE emp_no IN (
 	WHERE to_date > CURDATE()
 )
 AND gender = 'F';
+
+
 
 # 5 
 -- Find all the employees that currently have a higher than average salary. 154543 rows in total. 
@@ -65,16 +82,31 @@ WHERE emp_no IN (
 )
 AND to_date > CURDATE();
 
+# alternate way
+SELECT 
+	first_name, 
+	last_name, 
+	salary
+FROM employees
+JOIN salaries USING(emp_no)
+WHERE to_date > CURDATE()
+AND salary > (
+	SELECT AVG(salary)
+	FROM salaries
+);
+
+
 
 # 6
 -- How many current salaries are within 1 standard deviation of the highest salary? (Hint: you can use a built in function to calculate the standard deviation.) What percentage of all salaries is this?
-SELECT 
-	*
-FROM salaries 
-WHERE salary > (
-	SELECT MAX(salary) - STD(salary)
-	FROM salaries) 
-AND to_date > NOW();
+SELECT
+	(SELECT COUNT(*)
+	FROM salaries 
+	WHERE salary >= (
+		(SELECT MAX(salary) - STD(salary)
+		FROM salaries)) 
+	AND to_date > NOW())
+	/ (SELECT COUNT(*) FROM salaries WHERE to_date > NOW());
 
 
 # BONUSES
@@ -127,10 +159,6 @@ WHERE dept_no = (
 		)
 	)
 );
-
-
-
-
 
 
 

@@ -254,17 +254,20 @@ WHERE de.to_date = '9999-01-01' AND dm.to_date = '9999-01-01'
 ORDER BY d.dept_name, e.first_name, e.last_name;
 
 
+# Bonus Find the highest paid employee in each department. will be on slack
 # 11
-SELECT
-	CONCAT(e.first_name, ' ', e.last_name) AS "Employee NAME",
-	d.dept_name AS "Department NAME",
-	salary
-FROM employees e
-JOIN dept_emp de ON de.emp_no = e.emp_no
-JOIN salaries s ON s.emp_no = de.emp_no
-JOIN departments d ON d.dept_no = de.dept_no
-WHERE s.to_date = '9999-01-01' AND de.to_date = "9999-01-01"
-ORDER BY d.dept_name, salary DESC; 
+SELECT MAX(A.salary) as max_salary, A.dept_no
+
+SELECT 
+	de.emp_no,
+	de.dept_no,
+	s.salary
+FROM dept_emp de
+JOIN salaries s ON de.emp_no = s.emp_no
+WHERE de.to_date > NOW() s.to_date > NOW()
+) A
+GROUP BY A.dept_no
+;
 
 
 
