@@ -37,31 +37,31 @@ ALTER TABLE payment MODIFY amount FLOAT;
 UPDATE payment SET amount = amount * 100;
 ALTER TABLE payment MODIFY amount INT;
 
+
 # 3
 DROP TABLE employees_avg_salary;
 
 CREATE TABLE employees_avg_salary AS
-SELECT emp_no, salary, dept_name
+SELECT dept_name, AVG(salary) AS `avg_dept_salary`
 FROM employees.salaries
 JOIN employees.dept_emp USING(emp_no)
 JOIN employees.departments USING(dept_no)
-WHERE salaries.to_date > NOW();
+WHERE salaries.to_date > NOW() AND dept_emp.to_date > NOW()
+GROUP BY dept_name;
 
 SELECT * FROM employees_avg_salary;
-# numerator
-SELECT salary - (
-	SELECT AVG(salary) 
-	FROM employees_avg_salary) AS `salary minus avg`
-FROM employees_avg_salary;
 
-# table created 
-CREATE TEMPORARY TABLE avg_salaries AS
-SELECT salary - (
-	SELECT AVG(salary) 
-	FROM employees_avg_salary) AS `salary minus avg`
-FROM employees_avg_salary;
+CREATE TABLE stats AS
+SELECT AVG(salary) AS mean, std(salary) AS sd
+FROM employees.salaries
+WHERE salaries.to_date > NOW();
 
-SELECT * FROM avg_salaries;
+ALTER TABLE employees_avg_salary ADD salary_z_score FLOAT(36);
+
+UPDATE employees_avg_salary 
+SET salary_z_score = (
+	(avg_dept_salary - (SELECT mean FROM stats)) / (SELECT sd FROM stats) 
+);
 
 
 
