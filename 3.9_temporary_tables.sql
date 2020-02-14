@@ -63,6 +63,9 @@ SET salary_z_score = (
 	(avg_dept_salary - (SELECT mean FROM stats)) / (SELECT sd FROM stats) 
 );
 
+# Sales is the best department to work for
+# Human Resources is the worst department to work for
+
 
 
 
