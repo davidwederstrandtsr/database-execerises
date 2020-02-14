@@ -32,3 +32,20 @@ SELECT COUNT(*),
 FROM employees
 GROUP BY decade;
 
+
+# BONUS 
+/* What IS the average salary FOR EACH of the following department groups: R&D, Sales & Marketing, Prod & QM, Finance & HR, Customer Service? */
+
+SELECT
+	CASE 
+		WHEN dept_name IN ('research', 'development') THEN 'R&D'
+		WHEN dept_name IN ('sales', 'marketing') THEN 'Sales & Marketing' 
+		WHEN dept_name IN ('Production', 'Quality Management') THEN 'Prod & QM'
+		ELSE dept_name
+	END AS dept_group,
+	AVG(salary)
+FROM departments
+JOIN dept_emp USING(dept_no)
+JOIN salaries USING(emp_no)
+GROUP BY dept_group;
+
