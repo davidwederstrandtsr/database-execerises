@@ -1,5 +1,6 @@
 
 # Database Exercises
 
-These are exercises I had completed at ## CodeUp
+These are exercises I had completed at 
+## CodeUp
   
